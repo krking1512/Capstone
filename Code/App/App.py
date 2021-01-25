@@ -38,8 +38,8 @@ def make_predictions():
         return dataframe[new_column]
     tok_and_lem(df,'text_processed',0)
     model = pickle.load(open('./Models/n_bayes_2','rb')
-    preds = f'{model.predict(np.array(df['text_processed']))[0]}'
-    return render_template("results.html", data = input_dict.values(), pred = f'{model.predict(np.array(df["text_processed"]))[0]}'
+    preds = model.predict(df['text_processed'])[0]
+    return render_template("results.html", data = input_dict.values(), pred = preds)
     
 # run the app
 if __name__ == '__main__':
