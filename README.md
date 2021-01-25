@@ -52,6 +52,9 @@ Sentiment analysis is often brought in as a counter example for why sarcasm dete
 ![heatmap](./Images/sentiment_heatmap.png)
 
 
+In the heatmap above we can see that the sentiment scores and sarcasm have weak relationships ranging from -0.19 (Compounded Sentiment Score) to 0.17 (Negative Sentiment Score). Further investigation indicates that 70% of the dataset scored positively when the sentiment score was compounded. In the histogram below are two series, indicating the Sarcasm/No Sarcasm label, you can see that the sarcastic tweets form a more normal distribution than the not sarcastic tweets which skewed positive.
+![histogram](./Images/sentiment_histogram.png)
+
  Riloff, R. (2013)
 
 
