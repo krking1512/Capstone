@@ -1,64 +1,43 @@
 # imports
-import pickle
 import numpy as np
-import pandas as pd
-from flask import Flask, request, Response, render_template, jsonify
-
+import pickle
+from flask import Flask, request, render_template, jsonify
+import text_processing
 # initialize the flask app
-app = Flask('myApp', template_folder = 'templates')
+app = Flask('my_app')
 
-### route 1: hello world
-# define the route
-@app.route('/')
-# create the controller
-def home():
-    return "Hello, world!"
+@app.route('/')# Flask will run the function directly below this decorator when you access this route '/'
 
-### route 2: return a "web page"
-@app.route('/hc_page')
-def hc_page():
-    # return some hard-coded HTML
-    return '<html><body><h1>This is a hard coded page!</h1><p>Here is some hard-coded content. Isn\'t it pretty?</p></body></html>'
 
-### route 3: return some data
-@app.route('/hc_page.json')
-def json():
-    # create some data to return as json
-    best_stuff = {
-        "coast": "east",
-        "movie" : "The Matrix",
-        "hairstyle" : "bald"
-    }
-    return jsonify(best_stuff), 200
-
-### route 4: show a form to the user
-@app.route("/forms")
+@app.route('/form')
 def form():
-    # use flask's render_template function to display the html page
-    return render_template("form.html")
+    return render_template('form.html')
 
-@app.route("/submit")
-def make_predictions():
-    # load the form data from the incoming request
+
+@app.route('/submit')
+def submit():
     user_input = request.args
-  
-    
+    tweet = str(user_input['PotentialTweet'])
 
-    # coerce data into a format that we can pass to our model
-    # data = [
-    #     int(user_input['OverallQual']),
-    #     int(user_input['FullBath']),
-    #     int(user_input['GarageArea']),
-    #     int(user_input['LotArea'])
-    # ]
-    # return jsonify({'data': data})
+    X_test = text_processing.tok_and_lem_input(tweet)
 
-    
-#     model = pickle.load(open("model/model.p", "rb"))
-#     prediction = model.predict(data)[0]
+    model_nb = pickle.load(open('./Models/n_bayes_2', 'rb'))
+    model_svc = pickle.load(open('./Models/svc_model','rb'))
+# read a binary file
+    preds_nb = f'{model_nb.predict(X_test)[0]:,}'
+    if preds_nb == "1":
+        pred_nb = 'sarcastic'
+    elif preds_nb == '0':
+        pred_nb = 'not Sarcastic'
+    else:
+        pred_nb = 'there was an error'
+    preds_svc = f'{model_svc.predict(X_test)[0]:,}'
+    if preds_svc == "1":
+        pred_svc = 'sarcastic'
+    elif preds_svc == '0':
+        pred_svc = 'not Sarcastic'
+    return render_template('results.html', prediction_nb = pred_nb, prediction_svc = pred_svc, data_processed= X_test[0], data = tweet)
 
-    return render_template("results.html", data = user_input['PotentialTweet'])
-    
-# run the app
-if __name__ == '__main__':
-    app.run(debug = True)
+# Call app.run(debug=True) when python script is called
+if __name__ == '__main__': # if this file gets run from the terminal then run what's below
+    app.run(debug=True)

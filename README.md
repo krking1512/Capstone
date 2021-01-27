@@ -23,11 +23,8 @@ Capstone
 │   │   Pull_tweets.ipnyb
 │   │   Cleaning_and_EDA.ipynb
 │   │   Modeling.ipynb
-│   │
-│   └───App
-│       │   file111.txt
-│       │   file112.txt
-│       │   ...
+│   │   App.py
+│   │   text_processing.py
 │   
 └───Data
 │   │   sarcasm_corpus.csv
@@ -42,17 +39,18 @@ Capstone
 │   │   Frequency_of_Null_Values.png
 │
 └───Assets
-│   │   
-│   │   
+│   │   Sarcasm_In_Natural_Language_Processing.pdf   
 │
-..............Not included in repository.................
+..............Not included in repository*.................
 └───Protected
-│   │
-│   └───Data
-│       │   corpus_processed.csv
-│       │   corpus_with_text.csv
-│       └───sarcasm-master
+    │
+    └───Data
+        │   corpus_processed.csv
+        │   corpus_with_text.csv
+        └───sarcasm-master**
 
+* not included to comply with Twitter API user agreements
+** forked from existing repository in sources
 ```
 
 
@@ -76,12 +74,6 @@ The second dataset used, was from Ghosh (2020) and contained 5000 Tweet texts wi
 The two datasets were merged to form a dataset with 8380 Tweets  that were scored either 1- Sarcastic, or 0- Not Sarcastic.
 
 
----
-## Key Features
-
-|Feature|Type|Origin Dataset|Description|
-|---|---|---|---|
-
 
 ---
 ## Exploratory Data analysis
@@ -99,15 +91,15 @@ In the heatmap above we can see that the sentiment scores and sarcasm have weak 
 
 
 
-
-
 ---
 ## Modeling
-To model the problem of predicting which tweets were sarcastic vs not sarcastic, I explored multiple classification models with either TfidfVectorizer or CountVectorizer both Natural Language Processors from Scikit-learn's feature extraction package. I found that TfidfVectorizer often produced more accurate results than CountVectorizer. In the table below are the names of models cooresponding to rows in the model_df dataframe generated during the model fitting process. As models are generated, scores and parameters are saved to a row to persist the information. Some model and transformer combinations were run with different parameter sets, but the optimal model produced by the search chose the same parameter options and produced the same scores.
+To model the problem of predicting which Tweets were sarcastic versus not sarcastic, I explored multiple classification models with either TfidfVectorizer or CountVectorizer both Natural Language Processors from Scikit-learn's feature extraction package. I found that TfidfVectorizer often produced better results than CountVectorizer. In the table below are the names of models corresponding to rows in the model_df dataframe generated during the model fitting process. As models are generated, scores and parameters are saved to a row to persist the information. Some model and transformer combinations were run with different parameter sets, but the optimal model produced by the search chose the same parameter options and produced the same scores.
 
-For this project, I wanted to optimize the accuracy score, and the f1 score which balances false positives and false negatives. Both the Support Vector Classifier Models and Multinomial Naive-Bayes models performed well in both target metrics and were used to generate predictions in the application. Overall 56.7% of the dataset included in the model has been scored negative for sarcasm, so the baseline against which I'm measuring Accuracy is 56.7%. Every model I ran beat this score, with the two chosen models at 69.1 and 70.5% accuracy.
+For this project, I wanted to optimize the accuracy score, and the f1 score which balances precision and recall scores. Both the Support Vector Classifier Models and Multinomial Naive-Bayes models performed well in both target metrics and were used to generate predictions in the application. Overall 56.7% of the dataset included in the model has been scored negative for sarcasm, so the baseline against which I'm measuring Accuracy is 56.7%. Every model I ran beat this score, with the two chosen models at 69.1 and 70.5% accuracy.
 
-In each model only the text data of each tweet was considered, in future versions of this project I would be interested in exploring additional tweet features which were either unavailable for the second dataset, or not yet included due to limited scope. Although sentiment analysis was included in the initial analysis, it has not yet been incorporated into the machine learning models.
+In each model only the text data of each tweet was considered, in future versions of this project I would be interested in exploring additional tweet features which were either unavailable for the second dataset, or not yet included due to limited scope. Although sentiment analysis was included in the initial analysis, it has not yet been incorporated into my machine learning models.
+
+I saved the Support Vector Classifier and the Multinomial Naive Bayes to use in the application.
 
 |Model|Score|f1 Score|AUC Score|Specificity (%)|Sensitivity(%)|Misclassification Rate(%)|Accuracy (%)
 |---|---|---|---|---|---|---|---|
@@ -124,12 +116,19 @@ model_BaggingClassifier()_TfidfVectorizer()_7|0.68|0.56|0.65|85.06|45.65|32.42|6
 
 ---
 ## App
-Because I wanted to help aid sarcasm detection for users wh omay have a hard time recognizing sarcasm in their own tone, an integral part of my project was to have a framework that could provide some feedback to a user. To do this I've built an application on Heroku with Flask that incorporates one of my machine learning models to determine if what a user has submitted is sarcastic or not. The app takes a user's input, runs the string through a processor to tokenize and lemmatize the input to get it into the same format as the training dataset. Then a model is applied and the user is taken to a result's template that reminds the user of their initial input, provides the lemmatized input string from the pre-processor, and the final prediction of Sarcastic or Not Sarcastic.
+Because I wanted to help aid sarcasm detection for users who may have a hard time recognizing sarcasm in their own tone, an integral part of my project was to have a framework that could provide some feedback to a user. To do this I've built an application on Heroku with Flask that incorporates one of my machine learning models to determine if what a user has submitted is sarcastic or not. The code for this is adapted from a General Assembly lesson written by Mahdi S. (DSI-NYC). The app takes a user's input, runs the string through a processor to tokenize and lemmatize the input to get it into the same format as the training dataset. Then a model is applied and the user is taken to a result's template that reminds the user of their initial input, provides the lemmatized input string from the pre-processor, and the final prediction of Sarcastic or Not Sarcastic.
+
+The app can be run by setting up an instance of Heroku in your project folder, and running 'python App.py'.
 
 
 ---
 ## Conclusions and Recommendations
-While the machine learning models were often able to provide accurate sarcasm predictions, they suffered greatly from the skewed content in the twitter datasets. The majority of the initial dataset was pulled during 2020, which shows in the top content for both sarcastic and non-sarcastic data. For example, as 2020 was an election year, in the full dataset, the word Trump appears 217 times in the dataset, of which 67% are sarcastic Tweets.
+While the machine learning models were often able to provide accurate sarcasm predictions, they suffered greatly from the skewed content in the Twitter datasets. The majority of the initial dataset was pulled during 2020, which shows in the top content for both sarcastic and non-sarcastic data. For example, as 2020 was an election year, in the full dataset, the word Trump appears 217 times in the dataset, of which 67% are sarcastic Tweets.
+
+As next steps I would like to incorporate additional, non-text features such as sentiment analysis and continue exploring emoji usage. To do so, I would also like to add additional data that is not reliant on the hashtag sarcasm, but relies on personal intuition and assessment. I expect that emoji usage in such Tweets might be higher when the user does not explicitly call out their sarcasm with a hashtag. Additionally, if the Tweet ids were available in such a dataset, I'd be interested in exploring creation hour, or other attributes of the Tweet that may contribute to Sarcasm ratings. Overall, while I was able to produce some accurate predictions for sarcasm, the model suffers from content-bias and would likely not perform as well on data from another year. In future versions I would look to detect more than the words used, but develop additional features that could contribute to sarcasm identification, like sentiment analysis patterns, or additional linguistic features. 
+
+Lastly, as this is intended to be a useful tool to aid users in ensuring their messages are or are not interpreted as intended, I would like to deploy the model and web application to allow other people to interact with the predictions.
+
 
 
 ---
@@ -147,4 +146,4 @@ Ghosh, S. (2020). A Report on the 2020 Sarcasm Detection Shared Task. In Proceed
 
 ---
 #Required Packages
-Numpy, Pandas, Matplotlib Scikit-learn, Seaborn, Flask, NLTK, Emoji, Pickle
+Numpy, Pandas, Matplotlib Scikit-learn, Seaborn, Flask, NLTK, Emoji, Pickle, Heroku, OS, decouple

@@ -2,4 +2,5 @@
 .ipynb_checkpoints
 Protected/
 .env
+_pycache_
 

@@ -3,9 +3,11 @@
 <head>
 	<title>Your Prediction</title>
 </head>
-<body>
-<h2> Your tweet was "{{data}}" <h2>
-<h2> After pre-processing your tweet became "{{data_processed}}" <h2>
-<h2> I predicted it to be "{{prediction}}" <h2>   
+<body style = "background-color:#03ecfc;">
+    
+<h3 style="text-align:center" style ="font-weight: normal" > Your tweet was "{{data}}" </h3>
+    <h3 style="text-align:center"> I predicted your tweet to be <b>{{prediction_nb}}</b> using a Naive Bayes model.</h3>   
+<h3 style="text-align:center"> I predicted your tweet to be <b>{{prediction_svc}}</b> using a Support Vector Classifier model.</h3>   
+
 </body>
 </html>
