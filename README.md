@@ -1,5 +1,6 @@
 # Sarcasm Detection in Twitter Tweets
 
+Katharine King
 
 ---
 ## Problem Statement
@@ -125,7 +126,7 @@ The app can be run by setting up an instance of Heroku in your project folder, a
 ## Conclusions and Recommendations
 While the machine learning models were often able to provide accurate sarcasm predictions, they suffered greatly from the skewed content in the Twitter datasets. The majority of the initial dataset was pulled during 2020, which shows in the top content for both sarcastic and non-sarcastic data. For example, as 2020 was an election year, in the full dataset, the word Trump appears 217 times in the dataset, of which 67% are sarcastic Tweets.
 
-As next steps I would like to incorporate additional, non-text features such as sentiment analysis and continue exploring emoji usage. To do so, I would also like to add additional data that is not reliant on the hashtag sarcasm, but relies on personal intuition and assessment. I expect that emoji usage in such Tweets might be higher when the user does not explicitly call out their sarcasm with a hashtag. Additionally, if the Tweet ids were available in such a dataset, I'd be interested in exploring creation hour, or other attributes of the Tweet that may contribute to Sarcasm ratings. Overall, while I was able to produce some accurate predictions for sarcasm, the model suffers from content-bias and would likely not perform as well on data from another year. In future versions I would look to detect more than the words used, but develop additional features that could contribute to sarcasm identification, like sentiment analysis patterns, or additional linguistic features. 
+As next steps I would like to incorporate additional, non-text features such as sentiment analysis and continue exploring emoji usage. To do so, I would also like to add additional data that is not reliant on the hashtag sarcasm, but relies on personal intuition and assessment. I expect that emoji usage in such Tweets might be higher when the user does not explicitly call out their sarcasm with a hashtag. Additionally, if the Tweet ids were available in such a dataset, I'd be interested in exploring creation hour, or other attributes of the Tweet that may contribute to Sarcasm ratings. Overall, while I was able to produce some accurate predictions for sarcasm, the model suffers from content-bias and would likely not perform as well on data from another year. In future versions I would look to detect more than the words used, but develop additional features that could contribute to sarcasm identification, like sentiment analysis patterns, or additional linguistic features.
 
 Lastly, as this is intended to be a useful tool to aid users in ensuring their messages are or are not interpreted as intended, I would like to deploy the model and web application to allow other people to interact with the predictions.
 
