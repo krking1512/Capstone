@@ -5,8 +5,7 @@ from flask import Flask, request, render_template, jsonify
 import text_processing
 # initialize the flask app
 app = Flask('my_app')
-# route 1: hello world
-# return a simple string
+
 @app.route('/')# Flask will run the function directly below this decorator when you access this route '/'
 
 
@@ -14,13 +13,12 @@ app = Flask('my_app')
 def form():
     return render_template('form.html')
 
-# route 5: accept the form submission and do something fancy with it
-# load in the form data from the incoming request
-# manipulate data into a format that we pass to our model
+
 @app.route('/submit')
 def submit():
     user_input = request.args
     tweet = str(user_input['PotentialTweet'])
+
     X_test = text_processing.tok_and_lem_input(tweet)
 
     model = pickle.load(open('./Models/n_bayes_2', 'rb'))

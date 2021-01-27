@@ -3,13 +3,28 @@
 <head>
     <title>Scarcasm Detector</title>
 </head>
-<body>
+<style>  
+    .input{  
+    text-align: center;    
+    width: 300px;  
+    height: 200px;  
+    padding-top: 100px;  
+    }  
+  
+</style>
+<body style = "background-color:#03ecfc;">
+    
     <form action="/submit">
+        <div class = "input">
         <p>
             <label for="PotentialTweet">Potential Tweet</label><br>
-            <input type="string" name="PotentialTweet">
+            <input type="text" name="PotentialTweet">
         </p>
-        <p><button type="submit">Submit</button></p>
+        
+
+        <button type="submit">Make Prediction</button>
+        </div>
     </form>
+    
 </body>
 </html>
